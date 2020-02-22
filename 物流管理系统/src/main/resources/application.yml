@@ -1,0 +1,27 @@
+server:
+  servlet:
+    session:
+      timeout: PT60M
+  port: 8080
+
+spring:
+  profiles:
+    active: producte
+  datasource:
+    url: jdbc:mysql://localhost:3306/springweb?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    database: mysql
+  freemarker:
+    cache: false
+    charset: UTF-8
+    template-loader-path: classpath:/templates/
+    suffix: .html
+  resources:
+    static-locations: classpath:/static/

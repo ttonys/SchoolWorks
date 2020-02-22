@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title>${msg1}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/vector.js"></script>
+</head>
+
+<body>
+
+<div class="dowebok">
+	<div class="container-login100">
+		<div class="wrap-login100">
+			<div class="login100-pic js-tilt" data-tilt>
+				<img src="images/${img}" alt="IMG">
+			</div>
+
+			 <form class="login100-form validate-form">
+				<span class="login100-form-title">
+					${msg2}
+				</span>
+
+				<div class="wrap-input100 validate-input">
+					<input id="username" class="input100"  type="text" name="username" placeholder="用户名">
+					<span class="focus-input100"></span>
+					<span class="symbol-input100">
+						<i class="fa fa-envelope" aria-hidden="true"></i>
+					</span>
+				</div>
+				<div class="wrap-input100 validate-input">
+					<input id="password" class="input100" type="password" name="password" placeholder="密码">
+					<span class="focus-input100"></span>
+					<span class="symbol-input100">
+						<i class="fa fa-lock" aria-hidden="true"></i>
+					</span>
+				</div>
+				
+				<div class="container-login100-form-btn">
+					<button class="login100-form-btn" onclick="postDate();return false;">
+						${msg3}
+					</button>
+				</div>
+
+				<div class="text-center p-t-12">
+<!--					<a class="txt2" href="javascript:">-->
+<!--						忘记密码？-->
+<!--					</a>-->
+				</div>
+
+				<div class="text-center p-t-136">
+<!--					<a class="txt2" href="/$url" >-->
+<!--							$msg4-->
+<!--						<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>-->
+<!--					</a>-->
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script language="javascript">
+	//防止页面后退
+	history.pushState(null, null, document.URL);
+	window.addEventListener('popstate', function () {
+		history.pushState(null, null, document.URL);
+	});
+</script>
+
+
+<script>
+	function postDate() {
+		var username = document.getElementById("username").value;
+		var password = document.getElementById("password").value;
+		if(username === "" || password === ""){
+			alert("输入不能为空");
+		}else {
+			$.ajax({
+				type: "POST",
+				dataType: "json",
+				url: '/user/${controller}',
+				contentType: "application/json",
+				data:JSON.stringify({
+					"username": username,
+					"password": password,
+				}),
+				success: function (result) {
+					console.log("data is :" + result)
+					if (result.code == 200) {
+						alert(result.data);
+						if(result.data === "登录成功"){
+							window.location.href = "/admin";
+						}
+						// window.location.href = "../home/home_page.html";
+					}else {
+						alert(result.data);
+					}
+				}
+			});
+		}
+
+	}
+</script>
+</body>
+</html>
